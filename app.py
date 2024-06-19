@@ -1,10 +1,8 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
 import altair as alt
+from altair import datum
 import emoji
 
 
@@ -14,10 +12,11 @@ url = "https://allianceforcoffeeexcellence.org/competition-auction-results/"
 st.write("[Cup of Excellence](%s) というコーヒーの品評会からデータを収集しています。" % url)
 st.write("streamlitの勉強を兼ねて作成しました。")
 
-# ダミーデータの作成
+# サンプルデータの作成
 st.subheader('Sample Data')
 df = pd.read_csv('sample.csv').sort_values(['year', 'country', 'rank_no'], ascending=[False, True, True]).reset_index(drop=True)
 st.dataframe(df)
+
 
 # wordcloud
 from collections import Counter
@@ -29,12 +28,12 @@ descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(","))
 descriptions_list = ",".join(descriptions_unique).split(",")
 c = Counter(descriptions_list)
 d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=800, height=400, background_color='white').fit_words(d)
+wordcloud = WordCloud(width=800, height=400, background_color='white', colormap="prism").fit_words(d)
 plt.figure()
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
 st.pyplot(plt)
-# st.write()
+
 
 # 箱ひげ
 st.subheader("Box Plot")
@@ -52,9 +51,62 @@ st.text('スコアとオークション価格の散布図')
 chart = alt.Chart(df).mark_circle(size=10).encode(
     x=alt.X('score:Q', scale=alt.Scale(domain=[80, 100])),
     y=alt.Y('high_bid:Q', scale=alt.Scale(domain=[0, 500])),
-    color=alt.Color('year:Q', scale=alt.Scale(domain=[1998, 2025], scheme='viridis'))
+    color=alt.Color('year:Q', scale=alt.Scale(domain=[1998, 2025], scheme='turbo'))
+).transform_filter(
+    (alt.datum.award_category == "coe")
 ).interactive()
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
+
+
+# 散布図
+st.subheader("Scatter Plot")
+st.text('スコアとランクの散布図')
+chart = alt.Chart(df).mark_circle(size=10).encode(
+    x=alt.X('rank_no:Q', scale=alt.Scale(domain=[0, 50], reverse=True)),
+    y=alt.Y('score:Q', scale=alt.Scale(domain=[80, 100])),
+    color=alt.Color('year:Q', scale=alt.Scale(domain=[1998, 2025], scheme='turbo'))
+).transform_filter(
+    (alt.datum.award_category == "coe")
+).interactive()
+st.altair_chart(chart, theme="streamlit", use_container_width=True)
+
+
+# 時系列折れ線
+st.subheader("Line Plot")
+st.text('時系列折れ線')
+agg = df.groupby(["year"]).agg({"high_bid":['mean', 'min', 'max']})
+agg.columns = agg.columns.droplevel(0)
+# agg = agg.add_suffix("_high_bid").reset_index()
+agg = agg.add_suffix("").reset_index()
+
+line = (
+    alt.Chart()
+    .mark_line()
+    .encode(
+        x=alt.X('year:Q', scale=alt.Scale(domain=[1998, 2025])),
+        y=alt.Y('high_bid:Q', scale=alt.Scale(domain=[0, 450]), title="high_bid"),
+        color="metric",
+    )
+)
+band = (
+    alt.Chart()
+    .mark_errorband(extent="ci")
+    .encode(
+        x=alt.X('year:Q', scale=alt.Scale(domain=[1998, 2025])),
+        y=alt.Y('high_bid:Q', scale=alt.Scale(domain=[0, 450]), title="high_bid"),
+        color="metric",
+        )
+)
+chart = alt.layer(
+    line,
+    band,
+    data=pd.melt(agg, id_vars=["year"], var_name="metric", value_name="high_bid")
+)
+st.altair_chart(
+    chart,
+    theme="streamlit",
+    use_container_width=True
+)
 
 
 # 時系列折れ線
@@ -86,7 +138,3 @@ st.altair_chart(
     theme="streamlit",
     use_container_width=True
 )
-
-
-
-
