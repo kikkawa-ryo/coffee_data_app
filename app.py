@@ -15,108 +15,10 @@ st.write("streamlitの勉強を兼ねて作成しました。")
 # サンプルデータの作成
 st.subheader('Sample Data')
 df = pd.read_csv('sample.csv').sort_values(['year', 'country', 'rank_no'], ascending=[False, True, True]).reset_index(drop=True)
-st.dataframe(df)
-
-# Flavor Wheel
-st.subheader('Coffee Flavor Wheel')
-st.image('flavor-wheel-en.png', caption='Coffee Flavor Wheel')
-
-# wordcloud
-from collections import Counter
-from wordcloud import WordCloud
-st.subheader("Word Cloud")
-
-st.text('Acidityに使われる言葉')
-descriptions = pd.concat([df['acidity_str_agg']], ignore_index=True, axis=0).dropna()
-descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-descriptions_list = ",".join(descriptions_unique).split(",")
-c = Counter(descriptions_list)
-d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-st.pyplot(plt)
-
-st.text('Aroma / Flavorに使われる言葉')
-descriptions = pd.concat([df['aroma_flavor_str_agg']], ignore_index=True, axis=0).dropna()
-descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-descriptions_list = ",".join(descriptions_unique).split(",")
-c = Counter(descriptions_list)
-d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-st.pyplot(plt)
-    
-st.text('全体的な印象の表現に使われる言葉')
-descriptions = pd.concat([df['other_str_agg'], df['overall_str_agg'], df['characteristics_str_agg']], ignore_index=True, axis=0).dropna()
-descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-descriptions_list = ",".join(descriptions_unique).split(",")
-c = Counter(descriptions_list)
-d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-st.pyplot(plt)
-# wordcloud1, wordcloud2, wordcloud3 = st.columns(3)
-# with wordcloud1:
-#     st.text('Acidityに使われる言葉')
-#     descriptions = pd.concat([df['acidity_str_agg']], ignore_index=True, axis=0).dropna()
-#     descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-#     descriptions_list = ",".join(descriptions_unique).split(",")
-#     c = Counter(descriptions_list)
-#     d={t[0]: t[1] for t in c.most_common()}
-#     wordcloud = WordCloud(width=800, height=400, background_color='white', colormap="prism").fit_words(d)
-#     plt.figure()
-#     plt.imshow(wordcloud, interpolation="bilinear")
-#     plt.axis("off")
-#     st.pyplot(plt)
-# with wordcloud2:
-#     st.text('Aroma / Flavorに使われる言葉')
-#     descriptions = pd.concat([df['aroma_flavor_str_agg']], ignore_index=True, axis=0).dropna()
-#     descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-#     descriptions_list = ",".join(descriptions_unique).split(",")
-#     c = Counter(descriptions_list)
-#     d={t[0]: t[1] for t in c.most_common()}
-#     wordcloud = WordCloud(width=800, height=400, background_color='white', colormap="prism").fit_words(d)
-#     plt.figure()
-#     plt.imshow(wordcloud, interpolation="bilinear")
-#     plt.axis("off")
-#     st.pyplot(plt)
-# with wordcloud3:
-#     st.text('全体的な印象の表現に使われる言葉')
-#     descriptions = pd.concat([df['other_str_agg'], df['overall_str_agg'], df['characteristics_str_agg']], ignore_index=True, axis=0).dropna()
-#     descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-#     descriptions_list = ",".join(descriptions_unique).split(",")
-#     c = Counter(descriptions_list)
-#     d={t[0]: t[1] for t in c.most_common()}
-#     wordcloud = WordCloud(width=800, height=400, background_color='white', colormap="prism").fit_words(d)
-#     plt.figure()
-#     plt.imshow(wordcloud, interpolation="bilinear")
-#     plt.axis("off")
-#     st.pyplot(plt)
+# st.session_state['df'] = pd.read_csv('sample.csv').sort_values(['year', 'country', 'rank_no'], ascending=[False, True, True]).reset_index(drop=True)
+# st.dataframe(st.session_state['df'])
 
 
-# 箱ひげ
-st.subheader("Box Plot")
-box1, box2 = st.columns(2)
-with box1:
-    st.text('年ごとのスコアの分布')
-    chart = alt.Chart(df).mark_boxplot(extent='min-max').encode(
-            x=alt.X('year:O'),
-            y=alt.Y('score:Q', scale=alt.Scale(domain=[80, 100])),
-        ).interactive()
-    st.altair_chart(chart, theme="streamlit", use_container_width=True)
-with box2:
-    st.text('国ごとの標高の分布')
-    chart = alt.Chart(df).mark_boxplot(extent='min-max').encode(
-            x=alt.X('country'),
-            y=alt.Y('avg_altitude:Q', scale=alt.Scale(domain=[0, 3000])),
-        ).interactive()
-    st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 # 散布図
 st.subheader("Scatter Plot")
@@ -144,6 +46,12 @@ st.text('標高とスコアの散布図')
 chart = alt.Chart(df).mark_circle(size=10).encode(
     x=alt.X('avg_altitude:Q', scale=alt.Scale(domain=[0, 3000])),
     y=alt.Y('score:Q', scale=alt.Scale(domain=[80, 100])),
+).interactive()
+st.altair_chart(chart, theme="streamlit", use_container_width=True)
+
+chart = alt.Chart(df).mark_circle(size=10).encode(
+    x=alt.X('avg_altitude:Q', scale=alt.Scale(domain=[0, 3000])),
+    y=alt.Y('weight_kg:Q', scale=alt.Scale(domain=[0, 10000])),
 ).interactive()
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
