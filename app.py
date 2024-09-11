@@ -10,13 +10,14 @@ st.title(emoji.emojize('Coffee Data App:hot_beverage:'))
 st.header("What's this app?")
 url = "https://allianceforcoffeeexcellence.org/competition-auction-results/"
 st.write("[Cup of Excellence](%s) というコーヒーの品評会からデータを収集しています。" % url)
-st.write("streamlitの勉強を兼ねて作成しました。")
+# st.write("streamlitの勉強を兼ねて作成しました。")
 
 # サンプルデータの作成
 st.subheader('Sample Data')
 df = pd.read_csv('sample.csv').sort_values(['year', 'country', 'rank_no'], ascending=[False, True, True]).reset_index(drop=True)
 # st.session_state['df'] = pd.read_csv('sample.csv').sort_values(['year', 'country', 'rank_no'], ascending=[False, True, True]).reset_index(drop=True)
 # st.dataframe(st.session_state['df'])
+st.dataframe(df)
 
 
 
