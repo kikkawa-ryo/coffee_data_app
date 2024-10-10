@@ -11,8 +11,9 @@ with st.sidebar:
     st.page_link("app.py", label="ホーム", icon="🏠")
     st.page_link("pages/viz_scatterplot.py", label="scatterplot", icon="📈")
     st.page_link("pages/viz_lineplot.py", label="lineplot", icon="📈")
-    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
+    st.page_link("pages/viz_barplot.py", label="barplot", icon="📊")
     st.page_link("pages/02_boxplot.py", label="boxplot", icon="📊")
+    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
     st.page_link("pages/gallery.py", label="gallery", icon="🖼")
 
 df = pd.read_csv('data/sample.csv').sort_values(['year', 'country', 'rank_no'], ascending=[False, True, True]).reset_index(drop=True)
@@ -56,17 +57,17 @@ default_color = 'black'
 grouped_color_func = SimpleGroupedColorFunc(color_to_words, default_color)
 # grouped_color_func = GroupedColorFunc(color_to_words, default_color)
 
-st.text('Aroma / Flavorに使われる言葉')
-descriptions = pd.concat([df['aroma_flavor_str_agg']], ignore_index=True, axis=0).dropna()
-descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-descriptions_list = ",".join(descriptions_unique).split(",")
-c = Counter(descriptions_list)
-d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=1920, height=1080, background_color=None, mode="RGBA", color_func=grouped_color_func).fit_words(d)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-st.pyplot(plt)
+# st.text('Aroma / Flavorに使われる言葉')
+# descriptions = pd.concat([df['aroma_flavor_str_agg']], ignore_index=True, axis=0).dropna()
+# descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
+# descriptions_list = ",".join(descriptions_unique).split(",")
+# c = Counter(descriptions_list)
+# d={t[0]: t[1] for t in c.most_common()}
+# wordcloud = WordCloud(width=1920, height=1080, background_color=None, mode="RGBA", color_func=grouped_color_func).fit_words(d)
+# plt.figure()
+# plt.imshow(wordcloud, interpolation="bilinear")
+# plt.axis("off")
+# st.pyplot(plt)
 
 
 st.text('Acidityに使われる言葉')

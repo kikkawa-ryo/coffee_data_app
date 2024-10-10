@@ -11,8 +11,9 @@ with st.sidebar:
     st.page_link("app.py", label="ホーム", icon="🏠")
     st.page_link("pages/viz_scatterplot.py", label="scatterplot", icon="📈")
     st.page_link("pages/viz_lineplot.py", label="lineplot", icon="📈")
-    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
+    st.page_link("pages/viz_barplot.py", label="barplot", icon="📊")
     st.page_link("pages/02_boxplot.py", label="boxplot", icon="📊")
+    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
     st.page_link("pages/gallery.py", label="gallery", icon="🖼")
 
 df = pd.read_csv('data/sample.csv').sort_values(['year', 'country', 'rank_no'], ascending=[False, True, True]).reset_index(drop=True)

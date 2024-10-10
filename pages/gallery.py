@@ -16,8 +16,9 @@ with st.sidebar:
     st.page_link("app.py", label="ホーム", icon="🏠")
     st.page_link("pages/viz_scatterplot.py", label="scatterplot", icon="📈")
     st.page_link("pages/viz_lineplot.py", label="lineplot", icon="📈")
-    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
+    st.page_link("pages/viz_barplot.py", label="barplot", icon="📊")
     st.page_link("pages/02_boxplot.py", label="boxplot", icon="📊")
+    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
     st.page_link("pages/gallery.py", label="gallery", icon="🖼")
 
 # body
@@ -47,12 +48,17 @@ rows = run_query(
         res.year,
         res.url,
         img.image_url,
+        farm.farm_cws,
     from
         `coffee-research.coffee_house.fct_results` res
     left join
         `coffee-research.coffee_house.dim_farm_images` img
     on
         res.result_key = img.result_key
+    left join
+        `coffee-research.coffee_house.dim_farm_info` farm
+    on
+        res.result_key = farm.result_key
     where
         img.image_url is not null
     order by
@@ -64,18 +70,22 @@ rows = run_query(
 
 # Print results.]
 for row in rows:
-    country = row['country'].replace("-"," ").title()
-    year = str(row['year'])
-    farm_url = row['url']
-    
-    st.write("Country: " + country + return_national_flag(country))
-    st.write("Year: " + year)
-    st.write("Farm URL: " + farm_url)
-    response = requests.get(row['image_url'])
     try:
+        country = row['country'].replace("-"," ").title()
+        year = str(row['year'])
+        image_url = row['image_url']
+        farm_url = row['url']
+        farm_cws = row['farm_cws'].title()
+        
+        st.write("Country: " + country + return_national_flag(country))
+        st.write("Year: " + year)
+        st.write("Farm | Coffee Washing Station: " + farm_cws)
+        st.write("Farm URL: " + farm_url)
+        response = requests.get(image_url)
+    
         img = Image.open(io.BytesIO(response.content))
         st.image(img)
     except Exception as e:
         print(e)
-    st.write("✍️ " + row['image_url'])
+    st.write("✍️ " + image_url)
     st.divider()

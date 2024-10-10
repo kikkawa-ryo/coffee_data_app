@@ -10,8 +10,9 @@ with st.sidebar:
     st.page_link("app.py", label="ホーム", icon="🏠")
     st.page_link("pages/viz_scatterplot.py", label="scatterplot", icon="📈")
     st.page_link("pages/viz_lineplot.py", label="lineplot", icon="📈")
-    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
+    st.page_link("pages/viz_barplot.py", label="barplot", icon="📊")
     st.page_link("pages/02_boxplot.py", label="boxplot", icon="📊")
+    st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
     st.page_link("pages/gallery.py", label="gallery", icon="🖼")
 
 st.title(emoji.emojize('Coffee Data App:hot_beverage:'))
