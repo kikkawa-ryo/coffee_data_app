@@ -34,8 +34,7 @@ sql = """
         year desc, country, score desc
 """
 df = client.query(sql).to_dataframe()
-st.dataframe(df)
-df['country'] = df['country'].apply(lambda x: x.replace("-"," ").title()).apply(lambda x: return_national_flag(x) + x)
+df['country'] = df['country'].apply(lambda x: x.replace("-"," ").title()).apply(lambda x: x +return_national_flag(x))
 df = df.convert_dtypes()
 df[['score', 'high_bid', 'total_value', 'weight_lb', 'weight_kg', 'min_altitude', 'avg_altitude', 'max_altitude']] = df[['score', 'high_bid', 'total_value', 'weight_lb', 'weight_kg', 'min_altitude', 'avg_altitude', 'max_altitude']].astype(float)
 
