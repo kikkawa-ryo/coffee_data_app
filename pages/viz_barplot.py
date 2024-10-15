@@ -8,6 +8,8 @@ from altair import datum
 from google.oauth2 import service_account
 from google.cloud import bigquery
 
+from utils.utils import return_national_flag
+
 # サイドバー
 with st.sidebar:
     st.page_link("app.py", label="ホーム", icon="🏠")
@@ -29,32 +31,65 @@ sql = """
     FROM
         `coffee-research`.`coffee_house`.`rpt_streamlit_sample_data`
     order by
-        year desc, country
+        year desc, country, score desc
 """
 df = client.query(sql).to_dataframe()
 st.dataframe(df)
+df['country'] = df['country'].apply(lambda x: x.replace("-"," ").title()).apply(lambda x: return_national_flag(x) + x)
+df = df.convert_dtypes()
+df[['score', 'high_bid', 'total_value', 'weight_lb', 'weight_kg', 'min_altitude', 'avg_altitude', 'max_altitude']] = df[['score', 'high_bid', 'total_value', 'weight_lb', 'weight_kg', 'min_altitude', 'avg_altitude', 'max_altitude']].astype(float)
 
 # 棒グラフ
-# st.subheader("Bar Plot")
-# st.text('年ごとのスコアの分布')
-# chart = alt.Chart(df).mark_boxplot(extent='min-max').encode(
-#         x=alt.X('year:O'),
-#         y=alt.Y('score:Q', scale=alt.Scale(domain=[80, 100])),
-#     ).interactive()
-# st.altair_chart(chart, theme="streamlit", use_container_width=True)
+st.subheader("Bar Plot")
+st.text('')
 
-# box1, box2 = st.columns(2)
-# with box1:
-#     st.text('年ごとのスコアの分布')
-#     chart = alt.Chart(df).mark_boxplot(extent='min-max').encode(
-#             x=alt.X('year:O'),
-#             y=alt.Y('score:Q', scale=alt.Scale(domain=[80, 100])),
-#         ).interactive()
-#     st.altair_chart(chart, theme="streamlit", use_container_width=True)
-# with box2:
-#     st.text('国ごとの標高の分布')
-#     chart = alt.Chart(df).mark_boxplot(extent='min-max').encode(
-#             x=alt.X('country'),
-#             y=alt.Y('avg_altitude:Q', scale=alt.Scale(domain=[0, 3000])),
-#         ).interactive()
-#     st.altair_chart(chart, theme="streamlit", use_container_width=True)
+
+h1 = (
+    alt.Chart(df)
+    .mark_bar()
+    .encode(
+        alt.X(
+            "high_bid:Q",
+            bin=alt.Bin(step=5, extent=[0, 500]),
+            # bin=True,
+            axis=alt.Axis(
+                title="落札価格の分布"
+            ),
+        ),
+        alt.Y(
+            "count()",
+        ),
+    )
+    .interactive()
+)
+st.altair_chart(
+    h1,
+    theme="streamlit",
+    use_container_width=True,
+)
+
+
+
+histgram = (
+    alt.Chart(df)
+    .mark_bar()
+    .encode(
+        alt.X(
+            "score:Q",
+            bin=alt.Bin(step=0.5, extent=[70, 100]),
+            # bin=True,
+            axis=alt.Axis(
+                title="落札価格の分布"
+            ),
+        ),
+        alt.Y(
+            "count()",
+        ),
+    )
+    .interactive()
+)
+st.altair_chart(
+    histgram,
+    theme="streamlit",
+    use_container_width=True,
+)
