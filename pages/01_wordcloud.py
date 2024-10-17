@@ -101,44 +101,45 @@ grouped_color_func = SimpleGroupedColorFunc(color_to_words, default_color)
 # st.pyplot(plt)
 
 
-st.text('Acidityに使われる言葉')
-descriptions = pd.concat([df['acidity_str_agg']], ignore_index=True, axis=0).dropna()
-descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-descriptions_list = ",".join(descriptions_unique).split(",")
-c = Counter(descriptions_list)
-d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-st.pyplot(plt)
-
-st.text('Aroma / Flavorに使われる言葉')
-descriptions = pd.concat([df['aroma_flavor_str_agg']], ignore_index=True, axis=0).dropna()
-descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-descriptions_list = ",".join(descriptions_unique).split(",")
-c = Counter(descriptions_list)
-d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-st.pyplot(plt)
 
 
+tab1, tab2, tab3 = st.tabs(["🍋 Acidity", "💐 Aroma / Flavor", "☕️ Overall"])
 
+with tab1:
+    tab1.subheader("Acidityに使われる言葉")
+    descriptions = pd.concat([df['acidity_str_agg']], ignore_index=True, axis=0).dropna()
+    descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
+    descriptions_list = ",".join(descriptions_unique).split(",")
+    c = Counter(descriptions_list)
+    d={t[0]: t[1] for t in c.most_common()}
+    wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
+    plt.figure()
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    st.pyplot(plt)
 
-
-
+with tab2:
+    tab2.subheader('Aroma / Flavorに使われる言葉')
+    descriptions = pd.concat([df['aroma_flavor_str_agg']], ignore_index=True, axis=0).dropna()
+    descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
+    descriptions_list = ",".join(descriptions_unique).split(",")
+    c = Counter(descriptions_list)
+    d={t[0]: t[1] for t in c.most_common()}
+    wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
+    plt.figure()
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    st.pyplot(plt)
     
-st.text('全体的な印象の表現に使われる言葉')
-descriptions = pd.concat([df['other_str_agg'], df['overall_str_agg'], df['characteristics_str_agg']], ignore_index=True, axis=0).dropna()
-descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
-descriptions_list = ",".join(descriptions_unique).split(",")
-c = Counter(descriptions_list)
-d={t[0]: t[1] for t in c.most_common()}
-wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-st.pyplot(plt)
+with tab3:
+    st.subheader('全体的な印象の表現に使われる言葉')
+    descriptions = pd.concat([df['other_str_agg'], df['overall_str_agg'], df['characteristics_str_agg']], ignore_index=True, axis=0).dropna()
+    descriptions_unique = descriptions.map(lambda l: ",".join(list(set(l.split(",")))) )
+    descriptions_list = ",".join(descriptions_unique).split(",")
+    c = Counter(descriptions_list)
+    d={t[0]: t[1] for t in c.most_common()}
+    wordcloud = WordCloud(width=600, height=400, background_color='white', colormap="prism").fit_words(d)
+    plt.figure()
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    st.pyplot(plt)
