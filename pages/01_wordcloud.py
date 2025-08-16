@@ -5,10 +5,8 @@ import matplotlib.pyplot as plt
 import altair as alt
 from altair import datum
 
-from google.oauth2 import service_account
-from google.cloud import bigquery
 
-from utils.utils import return_national_flag
+from utils.data_utils import query
 
 _="""
 全ページ共通の処理
@@ -22,30 +20,8 @@ with st.sidebar:
     st.page_link("pages/02_boxplot.py", label="boxplot", icon="📊")
     st.page_link("pages/01_wordcloud.py", label="wordcloud", icon="🍷")
     st.page_link("pages/gallery.py", label="gallery", icon="🖼")
-
-if 'df' not in st.session_state:
-    # Create API client.
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"]
-    )
-    client = bigquery.Client(credentials=credentials)
-    sql = """
-        SELECT
-            *
-        FROM
-            `coffee-research`.`coffee_house`.`rpt_streamlit_sample_data`
-        order by
-            year desc, country, score desc
-    """
-    # dataframeの作成
-    df = client.query(sql).to_dataframe()
-    df['country'] = df['country'].apply(lambda x: x.replace("-"," ").title()).apply(lambda x: x +return_national_flag(x))
-    df = df.convert_dtypes()
-    df[['score', 'high_bid', 'total_value', 'weight_lb', 'weight_kg', 'min_altitude', 'avg_altitude', 'max_altitude']] = df[['score', 'high_bid', 'total_value', 'weight_lb', 'weight_kg', 'min_altitude', 'avg_altitude', 'max_altitude']].astype(float)
-    # dataframeをセッションに保存
-    st.session_state.df = df
-df = st.session_state.df
-
+# データの取得
+df = query()
 
 _="""
 メイン処理
@@ -143,3 +119,57 @@ with tab3:
     plt.imshow(wordcloud, interpolation="bilinear")
     plt.axis("off")
     st.pyplot(plt)
+    
+st.map()
+# import folium
+# from streamlit_folium import st_folium
+# from geopy.geocoders import Nominatim
+
+# geolocator = Nominatim(user_agent="test") #名前はなんでもOK
+# # df
+# data = df[["country", "aroma_flavor_str_agg"]].dropna()
+# data["aroma_flavor_str_agg"] = data["aroma_flavor_str_agg"].map(lambda x: set(x.split(",")))
+
+# # 単語リストを展開して頻度を集計
+# def aggregate_word_frequencies(df):
+#     # words列を展開
+#     data_exploded = data.explode("aroma_flavor_str_agg")
+#     # 国ごと、単語ごとに頻度を集計
+#     freq_df = data_exploded.groupby(["country", "aroma_flavor_str_agg"]).size().reset_index(name="frequency")
+#     return freq_df
+
+# # 集計実行
+# data_agg = aggregate_word_frequencies(data).sort_values(['country', 'frequency'], ascending=[True, False])
+# data_agg["aroma_flavor_agg"] = 1
+# # data_agg
+
+# new_df = pd.DataFrame({"country": list(set(data_agg['country']))})
+# new_df["address"] = new_df.apply(lambda x : geolocator.geocode(x.country[:-1]).address, axis=1)
+# new_df["latitude"] = new_df.apply(lambda x : geolocator.geocode(x.country[:-1]).latitude, axis=1)
+# new_df["longitude"] = new_df.apply(lambda x : geolocator.geocode(x.country[:-1]).longitude, axis=1)
+# # for c in new_df['country']:
+# #     location = geolocator.geocode(c[:-1])
+# #     new_df["address"] = location.address
+# #     new_df["latitude"] = location.latitude
+# #     new_df["longitude"] = location.longitude
+# new_df
+# # countries = 
+
+
+# st.write(location.address)       #住所
+# st.write(location.latitude)      #緯度
+# st.write(location.longitude)     #経度
+# # df
+# m = folium.Map(location=[20, 0], zoom_start=2)
+# for country, lat, lon, values in data.itertuples(index=False):
+#     labels = ['Category1', 'Category2', 'Category3']
+#     img_str = create_pie_chart(values, labels)
+#     icon = folium.features.CustomIcon(
+#         icon_image=f'data:image/png;base64,{img_str}',
+#         icon_size=(50, 50)
+#     )
+#     folium.Marker(
+#         location=[lat, lon],
+#         icon=icon
+#     ).add_to(m)
+# st_folium(m, width=700, height=500)

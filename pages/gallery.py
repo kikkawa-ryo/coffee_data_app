@@ -25,7 +25,6 @@ with st.sidebar:
 st.title("Coffee Farm Gallery")
 st.header("What's this page?")
 st.write("このページでは、Cup of Excellenceに出品し入賞した農家さんがアップしている写真をランダムに見ることができます。")
-st.divider()
 
 # Create API client.
 credentials = service_account.Credentials.from_service_account_info(
@@ -41,51 +40,53 @@ def run_query(query):
     rows = [dict(row) for row in rows_raw]
     return rows
 
-rows = run_query(
-    """
-    select
-        res.country,
-        res.year,
-        res.url,
-        img.image_url,
-        farm.farm_cws,
-    from
-        `coffee-research.coffee_house.fct_results` res
-    left join
-        `coffee-research.coffee_house.dim_farm_images` img
-    on
-        res.result_key = img.result_key
-    left join
-        `coffee-research.coffee_house.dim_farm_info` farm
-    on
-        res.result_key = farm.result_key
-    where
-        img.image_url is not null
-    order by
-        RAND()
-    limit
-        15
-    """
-)
+# 画像表示コンテナ
+with st.container(height=700):
+    rows = run_query(
+        """
+        select
+            res.country,
+            res.year,
+            res.url,
+            img.image_url,
+            farm.farm_cws,
+        from
+            `coffee-research.coffee_house.fct_results` res
+        left join
+            `coffee-research.coffee_house.dim_farm_images` img
+        on
+            res.result_key = img.result_key
+        left join
+            `coffee-research.coffee_house.dim_farm_info` farm
+        on
+            res.result_key = farm.result_key
+        where
+            img.image_url is not null
+        order by
+            RAND()
+        limit
+            15
+        """
+    )
 
-# Print results.]
-for row in rows:
-    try:
-        country = row['country'].replace("-"," ").title()
-        year = str(row['year'])
-        image_url = row['image_url']
-        farm_url = row['url']
-        farm_cws = row['farm_cws'].title()
+    # Print results.]
+    for row in rows:
+        try:
+            country = row['country'].replace("-"," ").title()
+            year = str(row['year'])
+            image_url = row['image_url']
+            farm_url = row['url']
+            farm_cws = row['farm_cws'].title()
+            
+            st.write("Country: " + country + return_national_flag(country))
+            st.write("Year: " + year)
+            st.write("Farm | Coffee Washing Station: " + farm_cws)
+            st.write("Farm URL: " + farm_url)
+            response = requests.get(image_url)
         
-        st.write("Country: " + country + return_national_flag(country))
-        st.write("Year: " + year)
-        st.write("Farm | Coffee Washing Station: " + farm_cws)
-        st.write("Farm URL: " + farm_url)
-        response = requests.get(image_url)
-    
-        img = Image.open(io.BytesIO(response.content))
-        st.image(img)
-    except Exception as e:
-        print(e)
-    st.write("✍️ " + image_url)
-    st.divider()
+            img = Image.open(io.BytesIO(response.content))
+            st.image(img)
+        except Exception as e:
+            print(e)
+        st.write("✍️ " + image_url)
+        st.divider()
