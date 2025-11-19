@@ -1,0 +1,15 @@
+Dockerfile
+.dockerignore
+.git/
+.gitignore
+
+venv/
+.venv/
+**/__pycache__/
+
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+data/
+requirements.in
+README.md

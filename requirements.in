@@ -1,0 +1,13 @@
+altair
+emoji
+folium
+matplotlib
+pandas
+Pillow
+protobuf
+Requests
+streamlit==1.50.0
+streamlit_folium
+wordcloud
+google-auth
+google-cloud-bigquery[pandas]
