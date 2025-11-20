@@ -1,15 +1,8 @@
 [server]
 headless = true
-port = 8501
-runOnSave = false
-
-[browser]
-serverPort = 8501
 
 [client]
 showSidebarNavigation = true
-
-[ui]
 
 [theme]
 base = "light"
