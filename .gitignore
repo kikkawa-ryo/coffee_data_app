@@ -1,6 +1,8 @@
 venv
 .venv
 
+.devcontainer
+
 .streamlit/secrets.toml
 
 __pycache__/

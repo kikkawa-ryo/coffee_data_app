@@ -2,6 +2,7 @@ Dockerfile
 .dockerignore
 .git/
 .gitignore
+.devcontainer
 
 venv/
 .venv/
