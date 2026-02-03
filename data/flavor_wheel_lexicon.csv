@@ -1,0 +1,86 @@
+Category1,Color1,Category2,Color2,Category3,Color3
+Fruity,#D20017,Berry,#D6333C,Blackberry,#2F0011
+Fruity,#D20017,Berry,#D6333C,Raspberry,#E00053
+Fruity,#D20017,Berry,#D6333C,Blueberry,#5050A2
+Fruity,#D20017,Berry,#D6333C,Strawberry,#EB0D24
+Fruity,#D20017,Dried fruit,#BE3430,Raisin,#A62540
+Fruity,#D20017,Dried fruit,#BE3430,Prune,#942C5C
+Fruity,#D20017,Other fruit,#EF5036,Coconut,#C66822
+Fruity,#D20017,Other fruit,#EF5036,Cherrry,#E2163D
+Fruity,#D20017,Other fruit,#EF5036,Pomegranate,#E03D41
+Fruity,#D20017,Other fruit,#EF5036,Pineapple,#F6890E
+Fruity,#D20017,Other fruit,#EF5036,Grape,#9EB115
+Fruity,#D20017,Other fruit,#EF5036,Apple,#3EB130
+Fruity,#D20017,Other fruit,#EF5036,Peach,#F57544
+Fruity,#D20017,Other fruit,#EF5036,Pear,#AC991E
+Fruity,#D20017,Citrus fruit,#F59113,Grapefruit,#EF4A3F
+Fruity,#D20017,Citrus fruit,#F59113,Orange,#DC4D12
+Fruity,#D20017,Citrus fruit,#F59113,Lemon,#FBE40A
+Fruity,#D20017,Citrus fruit,#F59113,Lime,#6BA822
+Sour/Fermented,#E7A70B,Sour,#DABA09,Sour aromatics,#8D9C0F
+Sour/Fermented,#E7A70B,Sour,#DABA09,Acetic acid,#829A5A
+Sour/Fermented,#E7A70B,Sour,#DABA09,Butyric acid,#C6A736
+Sour/Fermented,#E7A70B,Sour,#DABA09,Isovaleric acid,#7CAD2E
+Sour/Fermented,#E7A70B,Sour,#DABA09,Citric acid,#FAF20B
+Sour/Fermented,#E7A70B,Sour,#DABA09,Malic acid,#B5B209
+Sour/Fermented,#E7A70B,Alcohol/Fermented,#A1881E,Winey,#A1881E
+Sour/Fermented,#E7A70B,Alcohol/Fermented,#A1881E,Whiskey,#A42C28
+Sour/Fermented,#E7A70B,Alcohol/Fermented,#A1881E,Fermented,#AC821D
+Sour/Fermented,#E7A70B,Alcohol/Fermented,#A1881E,Overripe,#795227
+Green/Vegetative,#196A21,Olive oil,#91A616,,
+Green/Vegetative,#196A21,Raw,#5D7A21,,
+Green/Vegetative,#196A21,Green/Vegetative,#2C953F,Under-ripe,#92B415
+Green/Vegetative,#196A21,Green/Vegetative,#2C953F,Peapod,#50A027
+Green/Vegetative,#196A21,Green/Vegetative,#2C953F,Fresh,#259A3E
+Green/Vegetative,#196A21,Green/Vegetative,#2C953F,Dark green,#1C7636
+Green/Vegetative,#196A21,Green/Vegetative,#2C953F,Vegetative,#29AC34
+Green/Vegetative,#196A21,Green/Vegetative,#2C953F,Hay-like,#939C1A
+Green/Vegetative,#196A21,Green/Vegetative,#2C953F,Herb-like,#68BB29
+Green/Vegetative,#196A21,Beany,#4C8B6C,,
+Other,#2792A8,Papery/Musty,#8BA3A9,Stale,#78797E
+Other,#2792A8,Papery/Musty,#8BA3A9,Cardboard,#B0A55E
+Other,#2792A8,Papery/Musty,#8BA3A9,Papery,#FFFFF2
+Other,#2792A8,Papery/Musty,#8BA3A9,Woody,#613F02
+Other,#2792A8,Papery/Musty,#8BA3A9,Moldy/Damp,#929559
+Other,#2792A8,Papery/Musty,#8BA3A9,Musty/Dusty,#BEA96D
+Other,#2792A8,Papery/Musty,#8BA3A9,Musty/Earthy,#867832
+Other,#2792A8,Papery/Musty,#8BA3A9,Animalic,#8C866B
+Other,#2792A8,Papery/Musty,#8BA3A9,Meaty/Brothy,#C16554
+Other,#2792A8,Papery/Musty,#8BA3A9,Phenolic,#D34C56
+Other,#2792A8,Chemical,#62B3C0,Bitter,#6D998B
+Other,#2792A8,Chemical,#62B3C0,Salty,#D6EEFE
+Other,#2792A8,Chemical,#62B3C0,Medicinal,#67899F
+Other,#2792A8,Chemical,#62B3C0,Petroleum,#268DAC
+Other,#2792A8,Chemical,#62B3C0,Skunky,#4C6467
+Other,#2792A8,Chemical,#62B3C0,Rubber,#0E0A0A
+Roasted,#BE341F,Pipe tobacco,#BF964D,,
+Roasted,#BE341F,Tobacco,#D8B267,,
+Roasted,#BE341F,Burnt,#B2734E,Acrid,#AB9632
+Roasted,#BE341F,Burnt,#B2734E,Ashy,#778680
+Roasted,#BE341F,Burnt,#B2734E,Smoky,#906128
+Roasted,#BE341F,Burnt,#B2734E,"Brown, Roast",#75370C
+Roasted,#BE341F,Cereal,#D5A248,Grain,#A97E59
+Roasted,#BE341F,Cereal,#D5A248,Malt,#E78C46
+Spices,#9D0D2E,Pungent,#663440,,
+Spices,#9D0D2E,Pepper,#C22430,,
+Spices,#9D0D2E,Brown spice,#A23744,Anise,#BC7720
+Spices,#9D0D2E,Brown spice,#A23744,Nutmeg,#791A1F
+Spices,#9D0D2E,Brown spice,#A23744,Cinnamon,#DF611A
+Spices,#9D0D2E,Brown spice,#A23744,Clove,#905846
+Nutty/Cocoa,#986850,Nutty,#BC7553,Peanuts,#CAA10C 
+Nutty/Cocoa,#986850,Nutty,#BC7553,Hazelnut,#8B4123
+Nutty/Cocoa,#986850,Nutty,#BC7553,Almond,#BC8E6E
+Nutty/Cocoa,#986850,Cocoa,#AE6138,Chocolate,#561D12
+Nutty/Cocoa,#986850,Cocoa,#AE6138,Dark chocolate,#370000
+Sweet,#E0401F,Brown sugar,#CB4245,Molasses,#25080B
+Sweet,#E0401F,Brown sugar,#CB4245,Mapple syrup,#9E2215
+Sweet,#E0401F,Brown sugar,#CB4245,Caramelized,#CF7614
+Sweet,#E0401F,Brown sugar,#CB4245,Honey,#D24513
+Sweet,#E0401F,Vanilla,#F6866B,,
+Sweet,#E0401F,Vanillin,#F15D5E,,
+Sweet,#E0401F,Overall sweet,#E24153,,
+Sweet,#E0401F,Sweet Aromatics,#C53B49,,
+Floral,#D10054,Black Tea,#854959,,
+Floral,#D10054,Floral,#D8568A,Chamomile,#F68D0E
+Floral,#D10054,Floral,#D8568A,Rose,#EB3D63
+Floral,#D10054,Floral,#D8568A,Jasmine,#F6F1AD

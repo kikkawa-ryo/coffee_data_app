@@ -14,6 +14,8 @@ ENDPOINTでの処理
 """
 top = st.Page(
     page="pages/top.py", title="Home", icon="🏠", default=True)
+economic = st.Page(
+    page="pages/economic_coffee_price.py", title="Economic Analysis", icon="💰")
 stats = st.Page(
     page="pages/viz_stats.py", title="Cup of Excellence Stats", icon="📊")
 gallery = st.Page(
@@ -25,7 +27,7 @@ flavor = st.Page(
 
 
 pg = st.navigation(
-    [top, stats, flavor, gallery, flight]
+    [top, economic, stats, flavor, gallery, flight]
     )
 pg.run()
 # with st.sidebar:
